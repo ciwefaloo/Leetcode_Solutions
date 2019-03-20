@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int repeatedNTimes(vector<int>& A) {
+        int MAX_N=10000;
+        int n=A.size();
+        int count[MAX_N+1];
+        for(int i = 0; i < MAX_N; i++){
+            count[i] = 0;
+        }
+        int pos=0,answer=0;
+        bool flag=true;
+        while(flag && pos<n){
+            count[A[pos]]++;
+            if(count[A[pos]]==n/2){
+                flag=false;
+                answer = A[pos];
+            }
+            pos++;
+        }
+        return answer;
+    }
+};
