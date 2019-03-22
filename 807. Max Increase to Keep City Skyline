@@ -1,0 +1,39 @@
+class Solution {
+private:
+    int max_value_row (vector<vector<int>>& grid, int row){
+        int n = grid[row].size(), mx = 0;
+        
+        for (int i = 0; i < n; i++){
+            mx = max(mx, grid[row][i]);
+        } 
+        
+        return mx;
+    }
+    
+    int max_value_col (vector<vector<int>>& grid, int col){
+        int n = grid.size(), mx = 0;
+        
+        for (int i = 0; i < n; i++){
+            mx = max(mx, grid[i][col]);
+        } 
+        
+        return mx;
+    }
+    
+    
+    int min_value_row_and_col(int a, int b){
+        return min (a, b);
+    }
+    
+public:
+    int maxIncreaseKeepingSkyline(vector<vector<int>>& grid) {
+        int n = grid.size();
+        int answer = 0;
+        for(int i = 0; i < n; i++){
+            for(int j = 0;j < n; j++){
+                answer += min_value_row_and_col(max_value_row(grid,i),max_value_col(grid,j))-grid[i][j]; 
+            }
+        }
+        return answer;
+    }
+};
