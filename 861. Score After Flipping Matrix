@@ -1,0 +1,81 @@
+class Solution {
+    
+private:
+    
+    int count_one_in_col(vector<vector<int>>& a, int col){
+        int cnt = 0;
+        int n = a.size();
+        for(int i = 0; i < n; i++){
+            if(a[i][col] == 1){
+                cnt ++;
+            }
+        }
+        return cnt;
+    }
+    
+    void convert_first_zero_row(vector<vector<int>>& a, int row){
+        int n = a[row].size();
+        for(int i = 0; i < n; i++){
+            if(a[row][i] == 1){
+                a[row][i] = 0;
+            }
+            else{
+                a[row][i] = 1;
+            }
+        }
+    }
+    
+    void convert_column(vector<vector<int>>& a, int col){
+        int n = a.size();
+        for(int i = 0; i < n; i++){
+            if(a[i][col] == 1){
+                a[i][col] = 0;
+            }
+            else{
+                a[i][col] = 1;
+            }
+        }
+    }
+    
+    int system_two_to_ten(vector<vector<int>>& a){
+        
+        int n = a.size();
+        int m = a[0].size();
+        int answer = 0;
+        
+        for(int i = 0; i < n; i++){
+            int st = 1;
+            for(int j = m-1; j >= 0; j--){
+                answer += a[i][j] * st;
+                st*=2;
+            }
+        }
+        return answer;
+    }
+    
+public:
+    int matrixScore(vector<vector<int>>& A) {
+        
+        int n = A.size();
+        int m = A[0].size();
+        
+        for(int i = 0; i < n; i++){
+            if(A[i][0] == 0){
+                convert_first_zero_row(A, i);
+            }
+        }
+        
+        for(int i = 1; i < m; i++){
+            
+            int cnt_one = count_one_in_col(A, i);
+            
+            if(cnt_one < n - cnt_one){
+                convert_column(A, i);
+            }
+        }
+        
+        int answer = system_two_to_ten(A);
+        return answer;
+        
+    }
+};
