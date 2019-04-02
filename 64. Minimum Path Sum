@@ -1,0 +1,43 @@
+class Solution {
+private:
+    
+    int dp[1000][1000];
+    
+    int f(vector<vector<int>>& grid, int i, int j){
+        
+        int n = grid.size();
+        int m = grid[0].size();
+        
+        int ans = 0;
+            
+        if(dp[i][j] > 0){
+            ans = grid[i][j] + dp[i][j];
+        }
+        else{
+            if(i == n-1 && j == m-1){
+                ans = grid[i][j];
+            }
+
+            else if(i < n - 1 && j < m - 1){
+                dp[i][j] = min (f(grid, i + 1, j), f(grid, i, j + 1 ));
+                ans = grid[i][j] + dp[i][j];
+            }
+
+            else if(i == n - 1){
+                dp[i][j] = f(grid, i, j + 1);
+                ans = grid[i][j] + dp[i][j];
+            }
+
+            else if(j == m - 1){
+                dp[i][j] = f(grid, i + 1, j);
+                ans = grid[i][j] + dp[i][j];
+            }
+        }
+        return ans;
+    }
+public:
+    int minPathSum(vector<vector<int>>& grid) {
+        int answer = f(grid, 0, 0);
+        return answer;
+    }
+};
