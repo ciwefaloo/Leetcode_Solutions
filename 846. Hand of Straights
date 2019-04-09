@@ -1,0 +1,45 @@
+class Solution {
+public:
+    bool isNStraightHand(vector<int>& hand, int W) {
+        const int N = 10001;
+        int n = hand.size();
+        
+        if(!(n % W == 0)){
+            return false;
+        }
+        
+        sort(hand.begin(), hand.end());
+        
+        int used[N];
+        for(int i = 0; i < N; i++){
+            used[i]=0;
+        }
+        
+        int pos = 0, num = 0, cnt_num = 0;
+        while(pos < n){
+            num = hand[pos];
+            used[pos] = true;
+            cnt_num = 1;
+            pos++;
+            while(pos < n && cnt_num != W){
+                if(!used[pos] && hand[pos] - num == 1){
+                    num = hand[pos];
+                    used[pos] = true;
+                    cnt_num++;
+                }
+                pos++;
+            }
+            
+            if(cnt_num != W){
+                return false;
+            }
+            
+            pos = 0;
+            while(pos < n && used[pos]){
+                pos++;
+            }
+            
+        }
+        return true;
+    }
+};
