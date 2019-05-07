@@ -1,0 +1,23 @@
+class Solution {
+private:
+    int dp[1005];
+    
+    int minCostWithIndexPos(int pos, vector<int>& cost){
+        int ans = 0;
+        if(pos<cost.size()){
+            ans = cost[pos];
+            if(!dp[pos]){
+                dp[pos] = min(minCostWithIndexPos(pos + 1, cost), minCostWithIndexPos(pos + 2, cost));
+            }
+            ans = ans + dp[pos];
+        }
+        return ans;
+    }    
+    int minCost(int cost0, int cost1){
+        return min(cost0, cost1);
+    }
+public:
+    int minCostClimbingStairs(vector<int>& cost) {
+        return minCost(minCostWithIndexPos(0, cost), minCostWithIndexPos(1, cost));
+    }
+};
